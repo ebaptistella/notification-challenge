@@ -1,6 +1,6 @@
 (defproject challenge "0.1.0-SNAPSHOT"
   :description ""
-  :url "https://github.com/ebaptistella/challenge"
+  :url "https://github.com/ebaptistella/notification-challenge"
   :license {:name "MIT"
             :url "https://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.12.2"]
