@@ -1,10 +1,6 @@
 (ns challenge.common.enums
-  "Enum as set + strict validation (only enum values) or permissive validation (enum or any keyword).
-   Usage: (def status-enum #{:active :inactive :pending})
-        (enum? status-enum :active)        => true  (strict)
-        (enum-or? status-enum :unknown) => true  (permissive: accepts any keyword)
-        (enum-or? status-enum :active)     => true
-   Schemas: (enum-schema status-enum) strict, (enum-or-schema status-enum) permissive."
+  "Enum as set + strict/permissive validation and schemas. Shared utility (models, adapters, wire).
+   Enum as set + strict validation (only enum values) or permissive validation (enum or any keyword)."
   (:require [clojure.string :as str]
             [schema.core :as s]))
 

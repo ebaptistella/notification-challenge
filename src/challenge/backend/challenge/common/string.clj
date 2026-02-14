@@ -1,4 +1,4 @@
-(ns challenge.adapters.common.string
+(ns challenge.common.string
   (:require [clojure.string :as str]
             [schema.core :as s]))
 

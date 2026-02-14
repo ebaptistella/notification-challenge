@@ -1,6 +1,6 @@
 (ns challenge.adapters.delivery
-  (:require [challenge.adapters.common.date :as date]
-            [challenge.adapters.common.keyword :as keyword]
+  (:require [challenge.common.date :as date]
+            [challenge.common.keyword :as keyword]
             [challenge.models.channel :as models.channel]
             [challenge.models.notification-delivery :as models.delivery]
             [challenge.models.user :as models.user]

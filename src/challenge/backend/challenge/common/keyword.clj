@@ -1,5 +1,5 @@
-(ns challenge.adapters.common.keyword
-  (:require [challenge.adapters.common.string :as string]
+(ns challenge.common.keyword
+  (:require [challenge.common.string :as string]
             [schema.core :as s]))
 
 (s/defn keyword->db-column :- s/Keyword

@@ -1,4 +1,4 @@
-(ns challenge.adapters.common.date
+(ns challenge.common.date
   (:require [schema.core :as s])
   (:import [java.sql Timestamp]
            [java.time Instant]))
