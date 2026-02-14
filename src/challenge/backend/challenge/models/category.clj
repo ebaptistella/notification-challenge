@@ -1,5 +1,5 @@
 (ns challenge.models.category
-  (:require [challenge.enums :as enums]
+  (:require [challenge.common.enums :as enums]
             [challenge.schema :as schema]
             [schema.core :as s]))
 

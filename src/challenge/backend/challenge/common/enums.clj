@@ -1,4 +1,4 @@
-(ns challenge.enums
+(ns challenge.common.enums
   "Enum as set + strict validation (only enum values) or permissive validation (enum or any keyword).
    Usage: (def status-enum #{:active :inactive :pending})
         (enum? status-enum :active)        => true  (strict)
@@ -80,6 +80,6 @@
         opts-m (if underscore? {:normalize-underscore true} {})]
     `(do
        (def ~enum-sym ~enum-set)
-       (s/defschema ~schema-sym (challenge.enums/enum-schema ~enum-sym))
-       (defn ~(symbol (str (name prefix) "->str")) [v#] (challenge.enums/enum->str v# ~opts-m))
-       (defn ~(symbol (str "str->" (name prefix))) [v#] (challenge.enums/str->enum v# ~enum-sym ~opts-m)))))
+       (s/defschema ~schema-sym (challenge.common.enums/enum-schema ~enum-sym))
+       (defn ~(symbol (str (name prefix) "->str")) [v#] (challenge.common.enums/enum->str v# ~opts-m))
+       (defn ~(symbol (str "str->" (name prefix))) [v#] (challenge.common.enums/str->enum v# ~enum-sym ~opts-m)))))

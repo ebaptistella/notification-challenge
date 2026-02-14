@@ -1,5 +1,5 @@
 (ns challenge.models.notification-delivery
-  (:require [challenge.enums :as enums]
+  (:require [challenge.common.enums :as enums]
             [challenge.schema :as schema]
             [schema.core :as s]))
 
