@@ -1,7 +1,7 @@
 (ns challenge.common.enums
   "Enum as set + strict/permissive validation and schemas. Shared utility (models, adapters, wire).
    Enum as set + strict validation (only enum values) or permissive validation (enum or any keyword)."
-  (:require [clojure.string :as str]
+  (:require [challenge.common.string :as string]
             [schema.core :as s]))
 
 ;; ---- Validation ----
@@ -29,9 +29,7 @@
 ;; ---- String <-> keyword coercion (DB/wire) ----
 (defn- normalize-kw [v underscore?]
   (when v
-    (let [s (str v)
-          normalized (if underscore? (str/replace s "-" "_") s)]
-      (keyword normalized))))
+    (keyword (if underscore? (string/kebab->snake (str v)) (str v)))))
 
 (defn enum->str
   "Keyword -> string. opts: {:normalize-underscore true} to display with underscore."
