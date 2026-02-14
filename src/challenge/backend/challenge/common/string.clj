@@ -5,3 +5,8 @@
 (s/defn kebab->snake :- s/Str
   [s :- s/Str]
   (str/replace s #"-" "_"))
+
+(s/defn kebab->pascal :- s/Str
+  [s :- s/Str]
+  (-> (str/split s #"-")
+      (->> (map str/capitalize) (apply str))))

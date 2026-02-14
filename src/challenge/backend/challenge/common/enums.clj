@@ -38,7 +38,7 @@
   [k {:keys [normalize-underscore]}]
   (when k
     (let [n (name (if (keyword? k) k (keyword (str k))))]
-      (if normalize-underscore (str/replace n "-" "_") n))))
+      (if normalize-underscore (string/kebab->snake n) n))))
 
 (defn str->enum
   "Strict: string/keyword -> enum keyword or nil if invalid."
@@ -52,12 +52,9 @@
   [v {:keys [normalize-underscore]}]
   (when v (normalize-kw v (boolean normalize-underscore))))
 
-;; ---- Macro optional: define set + schema + coercion in caller namespace ----
-(defn- to-pascal [sym]
-  (-> (name sym)
-      (str/split #"-")
-      (->> (map str/capitalize) (apply str))
-      symbol))
+;; ---- Macro: define set + schema + coercion in caller namespace ----
+(defn- to-pascal-symbol [sym]
+  (symbol (string/kebab->pascal (name sym))))
 
 (defmacro defenum
   "Define in current namespace: prefix-enum (set), SchemaName (strict), prefix->str, str->prefix.
@@ -70,7 +67,7 @@
         opts    (if opts? (first args) {})
         values  (if opts? (rest args) args)
         enum-set (set values)
-        schema-sym (to-pascal prefix)
+        schema-sym (to-pascal-symbol prefix)
         enum-sym (symbol (str (name prefix) "-enum"))
         underscore? (:normalize-underscore opts)
         opts-m (if underscore? {:normalize-underscore true} {})]
