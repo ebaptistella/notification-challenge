@@ -1,11 +1,12 @@
 (ns challenge.wire.out.delivery
-  (:require [challenge.schema :as schema]
+  (:require [challenge.common.schema :as common.schema]
+            [challenge.schema :as schema]
             [schema.core :as s]))
 
-;; API returns strings. Tolerant reader: wire accepts string; adapter normalizes to enum for model.
+;; API returns strings. Refs via common.schema (id ou code). Adapter normalizes to enum for model.
 (def delivery-record-skeleton
-  {:user       {:schema (s/cond-pre s/Int s/Str) :required true :doc "User id or identifier"}
-   :channel    {:schema (s/cond-pre s/Int s/Str) :required true :doc "Channel id or code"}
+  {:user       {:schema common.schema/IdOrCode :required true :doc "User id or identifier"}
+   :channel    {:schema common.schema/IdOrCode :required true :doc "Channel id or code"}
    :message    {:schema (s/maybe s/Str) :required false :doc "Resolved message text that was sent"}
    :created-at {:schema (s/maybe s/Str) :required false :doc "Creation timestamp as ISO string"}
    :status     {:schema (s/maybe s/Str) :required false :doc "sent | failed"}})

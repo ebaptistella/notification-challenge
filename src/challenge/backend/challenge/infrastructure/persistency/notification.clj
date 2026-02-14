@@ -1,5 +1,6 @@
 (ns challenge.infrastructure.persistency.notification
   (:require [challenge.adapters.notification :as adapters.notification]
+            [challenge.common.schema :as common.schema]
             [challenge.components.persistency :as components.persistency]
             [challenge.models.category :as models.category]
             [challenge.models.channel :as models.channel]
@@ -9,7 +10,7 @@
 
 (s/defn find-category-by-id-or-code :- (s/maybe models.category/Category)
   "Tolerant reader: id-or-code may be int, string, or keyword (category code)."
-  [id-or-code :- (s/cond-pre s/Int s/Str s/Keyword)
+  [id-or-code :- common.schema/IdOrCode
    persistency :- components.persistency/IPersistencySchema]
   (let [ds (components.persistency/get-datasource persistency)
         row (if (number? id-or-code)
@@ -20,7 +21,7 @@
 
 (s/defn find-channel-by-id-or-code :- (s/maybe models.channel/Channel)
   "Tolerant reader: id-or-code may be int, string, or keyword (channel code)."
-  [id-or-code :- (s/cond-pre s/Int s/Str s/Keyword)
+  [id-or-code :- common.schema/IdOrCode
    persistency :- components.persistency/IPersistencySchema]
   (let [ds (components.persistency/get-datasource persistency)
         row (if (number? id-or-code)
@@ -56,7 +57,7 @@
 (s/defn update-notification-status! :- s/Int
   "Tolerant reader: status may be keyword or string; coerced to string for DB."
   [notification-id :- s/Int
-   status :- (s/cond-pre s/Str s/Keyword)
+   status :- common.schema/StatusRef
    persistency :- components.persistency/IPersistencySchema]
   (let [ds (components.persistency/get-datasource persistency)
         status-str (or (models.notification/notification-status->str status) (str status))
