@@ -1,7 +1,5 @@
 (ns challenge.handlers.http-server
-  (:require [challenge.handlers.routes.activity :as routes.activity]
-            [challenge.handlers.routes.health :as routes.health]
-            [challenge.handlers.routes.import :as routes.import]
+  (:require [challenge.handlers.routes.health :as routes.health]
             [challenge.handlers.routes.notification :as routes.notification]
             [challenge.handlers.routes.static :as routes.static]
             [challenge.handlers.routes.swagger :as routes.swagger]
@@ -15,8 +13,6 @@
 (s/defn ^:private  combine-routes
   []
   (set (concat routes.health/routes
-               routes.activity/routes
-               routes.import/routes
                routes.notification/routes
                routes.static/routes)))
 
@@ -33,7 +29,7 @@
   (MultipartConfigElement. "" (long 10485760) (long 10485760) 0))
 
 (defn- context-configurator
-  "Configura multipart nos servlets do Jetty para que POST /api/v1/import aceite file upload."
+  "Configura multipart nos servlets do Jetty para file upload (se necessário)."
   [^ServletContextHandler context]
   (let [servlet-handler (.getServletHandler context)
         holders         (.getServlets servlet-handler)]

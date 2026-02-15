@@ -171,7 +171,7 @@
   "Interceptor to validate and parse the :id path parameter as a Long.
    If the ID is present but invalid, throws NumberFormatException which will be
    caught by error-handler-interceptor and converted to 400 Bad Request.
-   If valid, adds the parsed ID to the request as :activity-id for handlers to use."
+   If valid, adds the parsed ID to the request as :path-param-id for handlers to use."
   (interceptor/interceptor
    {:name ::validate-path-params-id
     :enter (fn [context]
@@ -181,13 +181,12 @@
                    logger-comp (interceptors.components/get-component request :logger)
                    log (logger/bound logger-comp)]
                (if (nil? id-str)
-                 ;; No ID in path params, continue (for routes that don't require ID)
                  context
-                 (let [activity-id (Long/parseLong id-str)]
+                 (let [parsed-id (Long/parseLong id-str)]
                    (logger/log-call log :debug
-                                    "[Path Params Validation] Successfully parsed activity ID: %s"
-                                    activity-id)
-                   (assoc-in context [:request :activity-id] activity-id)))))}))
+                                    "[Path Params Validation] Successfully parsed path param id: %s"
+                                    parsed-id)
+                   (assoc-in context [:request :path-param-id] parsed-id)))))}))
 
 (s/defn not-found-message?
   "Checks if an error message indicates a 'not found' condition.

@@ -80,23 +80,7 @@
                                     prop-with-example (cond-> prop-schema
                                                         (and (= key-name "date")
                                                              (= (:type prop-schema) "string"))
-                                                        (assoc :example "2024-01-15")
-                                                        (and (= key-name "activity")
-                                                             (= (:type prop-schema) "string"))
-                                                        (assoc :example "Example activity")
-                                                        (and (= key-name "activity-type")
-                                                             (= (:type prop-schema) "string"))
-                                                        (assoc :example "type1")
-                                                        (and (= key-name "unit")
-                                                             (= (:type prop-schema) "string"))
-                                                        (assoc :example "kg")
-                                                        (and (contains? #{"amount-planned" "amount-executed"} key-name)
-                                                             (= (:type prop-schema) "number")
-                                                             (not (:nullable prop-schema)))
-                                                        (assoc :example 0.0)
-                                                        (and (contains? #{"amount-planned" "amount-executed"} key-name)
-                                                             (:nullable prop-schema))
-                                                        (dissoc :example))]
+                                                        (assoc :example "2024-01-15"))]
                                 (assoc acc key-name prop-with-example)))
                             {}
                             schema)
@@ -191,5 +175,5 @@
     {:openapi "3.0.0"
      :info {:title "Challenge API"
             :version "1.0.0"
-            :description "API for managing activities"}
+            :description "API for notifications and delivery"}
      :paths paths}))

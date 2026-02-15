@@ -3,48 +3,11 @@
             [challenge.components.logger :as components.logger]
             [challenge.components.pedestal :as components.pedestal]
             [challenge.handlers.http-server :as handlers.http-server]
-            [challenge.infrastructure.persistency.activity :as persistency.activity]
             [challenge.integration.aux.mock-persistency :as mock-persistency]
             [com.stuartsierra.component :as component]
             [io.pedestal.http :as http]
             [schema.core :as s]
             [state-flow.api :as flow]))
-
-;; Atom to store the current mock persistency instance during test execution
-(def ^:private mock-persistency-instance (atom nil))
-
-;; Store original functions to restore them later
-(def ^:private original-find-by-id (atom nil))
-(def ^:private original-find-all (atom nil))
-(def ^:private original-save! (atom nil))
-(def ^:private original-delete! (atom nil))
-
-(s/defn ^:private  setup-mocks!
-  "Sets up mock functions for persistency operations"
-  [mock-persistency]
-  (reset! mock-persistency-instance mock-persistency)
-  ;; Store original functions if not already stored
-  (when (nil? @original-find-by-id)
-    (reset! original-find-by-id persistency.activity/find-by-id)
-    (reset! original-find-all persistency.activity/find-all)
-    (reset! original-save! persistency.activity/save!)
-    (reset! original-delete! persistency.activity/delete!))
-  ;; Replace with mock implementations
-  (alter-var-root #'persistency.activity/find-by-id
-                  (constantly (fn [id _persistency]
-                                (mock-persistency/find-by-id id mock-persistency))))
-  (alter-var-root #'persistency.activity/find-all
-                  (constantly (fn
-                                ([_persistency]
-                                 (mock-persistency/find-all mock-persistency))
-                                ([_persistency filters]
-                                 (mock-persistency/find-all mock-persistency filters)))))
-  (alter-var-root #'persistency.activity/save!
-                  (constantly (fn [activity _persistency]
-                                (mock-persistency/save! activity mock-persistency))))
-  (alter-var-root #'persistency.activity/delete!
-                  (constantly (fn [id _persistency]
-                                (mock-persistency/delete! id mock-persistency)))))
 
 (s/defn init!
   "Initializes the test system with mocked components.
@@ -72,8 +35,6 @@
           logger (:logger started-system)
           config (:config started-system)
           pedestal (:pedestal started-system)]
-      ;; Setup mock functions to use mock persistency
-      (setup-mocks! mock-persistency)
       {:system started-system
        :persistency mock-persistency
        :logger logger
