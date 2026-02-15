@@ -11,7 +11,7 @@
    
    Options:
    - :method - HTTP method (:get, :post, :put, :delete, etc.)
-   - :path - Request path (e.g., \"/api/v1/activities\")
+   - :path - Request path (e.g., \"/api/v1/something\")
    - :body - Request body (map or string, will be JSON-encoded if map)
    - :headers - Optional headers map
    

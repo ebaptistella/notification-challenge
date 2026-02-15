@@ -3,14 +3,6 @@
             [clojure.test :refer [deftest is testing]]))
 
 (deftest not-found-message?-test
-  (testing "returns true for 'not found'"
-    (is (true? (validation/not-found-message? "Activity not found"))))
-
-  (testing "returns true for 'does not exist'"
-    (is (true? (validation/not-found-message? "Activity does not exist"))))
-
-  (testing "returns true for 'not exist'"
-    (is (true? (validation/not-found-message? "Activity not exist"))))
 
   (testing "returns false for other messages"
     (is (false? (validation/not-found-message? "Invalid request")))
@@ -29,6 +21,5 @@
     (is (true? (validation/not-found-message? "does not exist"))))
 
   (testing "matches partial strings"
-    (is (true? (validation/not-found-message? "The activity was not found in the database")))
     (is (true? (validation/not-found-message? "Resource does not exist anymore")))
     (is (true? (validation/not-found-message? "Item not exist in system")))))

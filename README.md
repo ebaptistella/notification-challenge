@@ -322,7 +322,7 @@ lein test challenge.integration
 ### Directory Structure
 
 ```
-activities-challenge/
+notification-challenge/
 ├── src/
 │   └── challenge/
 │       ├── backend/          # Backend: Clojure code (.clj files)
@@ -354,9 +354,7 @@ activities-challenge/
 │               └── ui/
 │                   ├── adapters.cljs
 │                   ├── components/   # Reagent components
-│                   │   ├── activities.cljs
 │                   │   ├── filters.cljs
-│                   │   └── upload.cljs
 │                   ├── core.cljs     # Main application entry (challenge.ui.core)
 │                   ├── http_client.cljs
 │                   ├── logic.cljs
